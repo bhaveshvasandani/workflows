@@ -32,7 +32,7 @@ jobs:
 
                 - name: Create tests-dir
                   run: |
-                          mkdir -p /mnt/hse/test_kvdb
+                          sudo mkdir -p /mnt/hse/test_kvdb
                 - name: Build setup with YCSB, tools and configs
                   run: |
                           sed -i.bak "s,ssh://git@bitbucket.micron.com/hse/hse-python.git,https://${{ secrets.GH_TOKEN }}@github.com/bhaveshvasandani/hse-python.git,g" subprojects/hse-python.wrap
