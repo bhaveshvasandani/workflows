@@ -32,14 +32,14 @@ jobs:
 
                 - name: Create tests-dir
                   run: |
-                          sudo mkdir -p /mnt/hse/test_kvdb
+                          mkdir -p /home/runner/hse/test_kvdb
                 - name: Build setup with YCSB, tools and configs
                   run: |
                           sed -i.bak "s,ssh://git@bitbucket.micron.com/hse/hse-python.git,https://${{ secrets.GH_TOKEN }}@github.com/bhaveshvasandani/hse-python.git,g" subprojects/hse-python.wrap
                           echo "BUILD=${{ matrix.build_type }}"
                           lsblk
                           df -h
-                          poetry run meson builddir -Dbuildtype=${{ matrix.build_type }} -Dycsb=true -Dinstall-tools=true -Dinstall-configs=true -Dwerror=true -Dtests=all -Dtests-dir=/mnt/hse/test_kvdb
+                          poetry run meson builddir -Dbuildtype=${{ matrix.build_type }} -Dycsb=true -Dinstall-tools=true -Dinstall-configs=true -Dwerror=true -Dtests=all -Dtests-dir=/home/runner/hse/test_kvdb
 
                 - name: Clang format check
                   continue-on-error: true
