@@ -46,9 +46,9 @@ jobs:
                   run: |
                           poetry run meson -C builddir format-check
 
-                - name: Run Unit tests
+                - name: Run tests
                   run: |
-                          poetry run meson test -C builddir --suite unit --print-errorlogs --no-stdsplit
+                          poetry run meson test -C builddir --setup=ci --no-suite=hse-python: --print-errorlogs --no-stdsplit
 
 
                 - uses: actions/upload-artifact@v2
@@ -56,4 +56,3 @@ jobs:
                   with:
                     name: build-artifact
                     path: builddir/meson-logs/
-
