@@ -24,7 +24,7 @@ jobs:
                           python3 -m pip install --user poetry
                 - uses: actions/checkout@v2
                   with:
-                          ref: 'hsemaster'
+                          ref: 'fixes/NFSE-4871-test-failures'
                 - name: Setup python environment to run branch
                   run: |
                           poetry install
@@ -48,7 +48,7 @@ jobs:
 
                 - name: Run tests
                   run: |
-                          poetry run meson test -C builddir --setup=ci --no-suite=hse-python: --print-errorlogs --no-stdsplit
+                          poetry run meson test -C builddir --setup=ci --print-errorlogs --no-stdsplit
 
 
                 - uses: actions/upload-artifact@v2
