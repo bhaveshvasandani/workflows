@@ -1,0 +1,26 @@
+name: Codecov
+on: [push, pull_request]
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+              ref: 'hsemaster'
+      - name: Install Dependency
+        run: |
+               sudo apt-get install build-essential libblkid-dev gettext autopoint autoconf bison libtool pkg-config openjdk-8-jdk libmicrohttpd-dev liburcu-dev libyaml-dev liblz4-1 liblz4-dev curl python3-setuptools gcovr
+               sudo apt-get install libmongoc-1.0-0 libbson-1.0-0 libssl-dev libsasl2-dev
+               python3 -m pip install --user setuptools_rust wheel
+               python3 -m pip install --user poetry
+               poetry install
+      - name: Test
+        run: |
+               sed -i.bak "s,ssh://git@bitbucket.micron.com/hse/hse-python.git,https://${{ secrets.GH_TOKEN }}@github.com/bhaveshvasandani/hse-python.git,g" subprojects/hse-python.wrap
+               poetry run meson builddir -Dbuildtype=debug -Dycsb=true -Dinstall-tools=true -Dinstall-configs=true -Dtests=unit -Db_coverage=true
+               poetry run meson test -C builddir
+               poetry run meson compile -C builddir gcovr-json
+      - name: Upload
+        uses: codecov/codecov-action@v1
+        with:
+          files: builddir/coverage.json
