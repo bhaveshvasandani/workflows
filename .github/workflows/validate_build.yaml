@@ -26,6 +26,7 @@ jobs:
                 - uses: actions/checkout@v2
                   with:
                           ref: 'fixes/NFSE-4871-test-failures'
+
                 - name: Setup python environment to run branch
                   run: |
                           poetry install
