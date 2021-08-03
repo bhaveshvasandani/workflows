@@ -7,45 +7,49 @@ on:
 
 jobs:
         build:
-                runs-on: ${{ matrix.os }}
-                strategy:
-                        fail-fast: false
-                        matrix:
-                                os: [ubuntu-18.04]
-                                build_type: [release, debugoptimized, debug]
+                runs-on: ubuntu-18.04
 
                 steps:
                 - name: Install dependencies
                   run: |
-                          sudo apt-get install build-essential libblkid-dev gettext autopoint autoconf bison libtool pkg-config openjdk-8-jdk libmicrohttpd-dev liburcu-dev libyaml-dev liblz4-1 liblz4-dev curl python3-setuptools
-                          dpkg -l | grep curl
-                          sudo apt-get install libmongoc-1.0-0 libbson-1.0-0 libssl-dev libsasl2-dev
-                          python3 -m pip install --user setuptools_rust wheel
-                          python3 -m pip install --user poetry
+
+                          sudo apt-get install build-essential libblkid-dev gettext autopoint autoconf bison libtool pkg-config openjdk-8-jdk libmicrohttpd-dev liburcu-dev libyaml-dev liblz4-1 liblz4-dev curl
                 - uses: actions/checkout@v2
                   with:
                           ref: 'hsemaster'
+
                 - name: Setup python environment to run branch
                   run: |
-                          poetry install
-                          poetry update meson
-
-                - name: Build setup with YCSB, tools and configs
+                          python3 -m venv venv
+                          source venv/bin/activate
+                          pip3 install wheel
+                          pip3 install -r requirements.txt
+                          pip3 install meson ninja
+                
+                - name: Install Hse
                   run: |
-                          sed -i.bak "s,ssh://git@bitbucket.micron.com/hse/hse-python.git,https://${{ secrets.GH_TOKEN }}@github.com/bhaveshvasandani/hse-python.git,g" subprojects/hse-python.wrap
-                          echo "BUILD=${{ matrix.build_type }}"
-                          lsblk
-                          df -h
-                          poetry run meson builddir -Dbuildtype=${{ matrix.build_type }} -Dycsb=true -Dinstall-tools=true -Dinstall-configs=true -Dwerror=true -Dtests=all
+                          source venv/bin/activate
+                          meson builddir -Dbuildtype=release -Dycsb=true -Dinstall-tools=true -Dinstall-configs=true -Dtests=all -Dwerror=true
+                          meson install -C builddir
 
-                - name: Clang format check
-                  continue-on-error: true
+                - uses: actions/checkout@v2
+                  with:
+                          ref: 'hse-pythonmaster'
+
+                - name: Install requirements to run hse-python branch
                   run: |
-                          poetry run meson -C builddir format-check
+                          source venv/bin/activate
+                          pip3 install -r requirements.txt
+                
+                - name: Build hse-python
+                  run: |
+                          source venv/bin/activate
+                          meson builddir -Dbuildtype=release -Dtests=true -Dwerror=true
 
                 - name: Run Unit tests
                   run: |
-                          poetry run meson test -C builddir --suite unit --print-errorlogs --no-stdsplit
+                          source venv/bin/activate
+                          meson test -C builddir --print-errorlogs --no-stdsplit
 
 
                 - uses: actions/upload-artifact@v2
