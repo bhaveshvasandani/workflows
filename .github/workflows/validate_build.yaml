@@ -36,7 +36,7 @@ jobs:
                           pip3 install -r requirements.txt
                           pip3 install meson ninja
 
-                - name: Build hse-python
+                - name: Build hse-python branch
                   run: |  
                           source venv/bin/activate
                           meson builddir -Dbuildtype=release -Dtests=true -Dwerror=true
