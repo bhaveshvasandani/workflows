@@ -39,7 +39,7 @@ jobs:
                 - name: Build hse-python branch
                   run: |  
                           source venv/bin/activate
-                          meson builddir -Dbuildtype=release -Dtests=true -Dwerror=true
+                          meson builddir
 
                 - name: Run Unit tests
                   run: |
