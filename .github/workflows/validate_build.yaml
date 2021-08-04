@@ -47,14 +47,6 @@ jobs:
                     name: hse
                     path: /opt/hse
 
-        build2:
-                runs-on: ${{ matrix.os }}
-                strategy:
-                        fail-fast: false
-                        matrix:
-                                os: [ubuntu-18.04]
-                                build_type: [release]
-                steps:
                 - name: Install requirements to run hse-python
                   run: |  
 
@@ -65,12 +57,16 @@ jobs:
                           python3 -m venv venv
                           source venv/bin/activate
                           pip3 install wheel
-                          pip3 install -r requirements.txt
                           pip3 install meson ninja
 
                 - uses: actions/checkout@v2
                   with:
                           ref: 'hse-pythonmaster'
+
+                - name: Setup python environment to run branch
+                  run: |
+                          source venv/bin/activate
+                          pip3 install -r requirements.txt
 
                 - uses: actions/download-artifact@v2
                   with:
