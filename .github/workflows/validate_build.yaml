@@ -17,37 +17,6 @@ jobs:
 
                 steps:
                 - name: Install dependencies
-                  run: |
-                          sudo apt-get update
-                          sudo apt-get install build-essential libblkid-dev libbsd-dev gettext autopoint autoconf bison libtool pkg-config openjdk-8-jdk libmicrohttpd-dev liburcu-dev libyaml-dev liblz4-1 liblz4-dev curl python3-setuptools
-                          dpkg -l | grep curl
-                          sudo apt-get install libmongoc-1.0-0 libbson-1.0-0 libssl-dev libsasl2-dev
-                          python3 -m pip install --user setuptools_rust wheel
-                          python3 -m pip install --user poetry
-
-                - uses: actions/checkout@v2
-                  with:
-                          ref: 'hsetest'
-                - name: Setup python environment to run branch
-                  run: |
-                          poetry install
-                          poetry update meson
-                
-                - name: Install Hse
-                  run: |  
-                          sed -i.bak "s,ssh://git@bitbucket.micron.com/hse/hse-python.git,https://${{ secrets.GH_TOKEN }}@github.com/bhaveshvasandani/hse-python.git,g" subprojects/hse-python.wrap
-                          echo "BUILD=${{ matrix.build_type }}"
-                          lsblk
-                          df -h
-                          poetry run meson builddir -Dbuildtype=${{ matrix.build_type }} -Dycsb=true -Dinstall-tools=true -Dinstall-configs=true -Dwerror=true
-                          poetry run meson install -C builddir
-                
-                - uses: actions/upload-artifact@v2
-                  with:
-                    name: hse
-                    path: /opt/hse
-
-                - name: Install requirements to run hse-python
                   run: |  
 
                           sudo apt-get update
@@ -57,7 +26,7 @@ jobs:
 
                 - uses: actions/checkout@v2
                   with:
-                          ref: 'hse-pythonmaster'
+                          ref: 'hse-pythontest'
 
                 - name: Setup python environment to run branch
                   run: |
@@ -67,14 +36,8 @@ jobs:
                           pip3 install -r requirements.txt
                           pip3 install meson ninja
 
-                - uses: actions/download-artifact@v2
-                  with:
-                    name: hse
-                    path: /opt/
-
                 - name: Build hse-python
                   run: |  
-                          ls -lrt "/opt/hse"
                           source venv/bin/activate
                           meson builddir -Dbuildtype=release -Dtests=true -Dwerror=true
 
