@@ -1,6 +1,6 @@
 [wrap-git]
 url = https://github.com/bhaveshvasandani/workflows.git
-revision = hsemaster
+revision = hsemaster-test
 
 [provide]
 dependency_names = hse-1
