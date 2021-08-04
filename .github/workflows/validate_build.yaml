@@ -42,12 +42,11 @@ jobs:
                           poetry run meson builddir -Dbuildtype=${{ matrix.build_type }} -Dycsb=true -Dinstall-tools=true -Dinstall-configs=true -Dtests=all -Dwerror=true
                           poetry run meson install -C builddir
 
-                - uses: actions/checkout@v2
-                  with:
-                          ref: 'hse-pythonmaster'
 
                 - name: Install requirements to run hse-python
-                  run: |
+                  run: |  
+                          git clone -b hse-pythonmaster https://${{ secrets.GH_TOKEN }}@github.com/bhaveshvasandani/workflows.git
+                          ls
                           sudo apt-get update
                           sudo apt-get install build-essential libblkid-dev libbsd-dev gettext autopoint autoconf bison libtool pkg-config openjdk-8-jdk libmicrohttpd-dev liburcu-dev libyaml-dev liblz4-1 liblz4-dev curl python3-setuptools
                           dpkg -l | grep curl
@@ -59,7 +58,8 @@ jobs:
                           pip3 install meson ninja
                 
                 - name: Build hse-python
-                  run: |
+                  run: |  
+                          ls -lrt "/opt/hse"
                           source venv/bin/activate
                           meson builddir -Dbuildtype=release -Dtests=true -Dwerror=true
 
