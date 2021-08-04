@@ -1,5 +1,5 @@
 [wrap-git]
-url = ssh://git@bitbucket.micron.com/hse/hse.git
+url = https://bitbucket.micron.com/bbdc/scm/hse/hse.git
 revision = master
 
 [provide]
