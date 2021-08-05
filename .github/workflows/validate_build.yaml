@@ -40,7 +40,12 @@ jobs:
                 - name: Build hse-python
                   run: |  
                           source venv/bin/activate
-                          meson builddir -Dtests=true
+                          meson builddir -Dtests=true -Dwerror=true
+                
+                - name: Compile hse-python
+                  run: |
+                          source venv/bin/activate
+                          ninja -C builddir
                 
                 - name: Black format check
                   continue-on-error: true
