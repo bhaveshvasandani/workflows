@@ -39,15 +39,9 @@ jobs:
                           df -h
                           poetry run meson builddir -Dbuildtype=${{ matrix.build_type }} -Dycsb=true -Dinstall-tools=true -Dinstall-configs=true -Dwerror=true
 
-                - name: Clang format check
-                  continue-on-error: true
-                  run: |
-                          poetry run ninja -C builddir format-check
-
                 - name: Run tests
                   run: |
                           poetry run meson test -C builddir --setup=ci --print-errorlogs --no-stdsplit
-
 
                 - uses: actions/upload-artifact@v2
                   if: failure()
@@ -90,15 +84,9 @@ jobs:
                           df -h
                           python3 -m poetry run meson builddir -Dbuildtype=${{ matrix.build_type }} -Dycsb=true -Dinstall-tools=true -Dinstall-configs=true -Dwerror=true
 
-                - name: Clang format check
-                  continue-on-error: true
-                  run: |
-                          python3 -m poetry run ninja -C builddir format-check
-
                 - name: Run tests
                   run: |
                           python3 -m poetry run meson test -C builddir --setup=ci --print-errorlogs --no-stdsplit
-
 
                 - uses: actions/upload-artifact@v2
                   if: failure()
