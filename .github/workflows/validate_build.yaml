@@ -33,13 +33,14 @@ jobs:
                           python3 -m venv venv
                           source venv/bin/activate
                           pip3 install wheel
+                          pip3 install black
                           pip3 install -r requirements.txt
                           pip3 install meson ninja
 
                 - name: Build hse-python
                   run: |  
                           source venv/bin/activate
-                          meson builddir
+                          meson builddir -Dtests=true
 
                 - name: Run Unit tests
                   run: |
