@@ -23,7 +23,6 @@ jobs:
       - name: Upload
         uses: codecov/codecov-action@v1
         with:
-          directory: ./
           path_to_write_report: builddir/codecov_report.txt
       - name: Archive artifacts
         uses: actions/upload-artifact@v2
