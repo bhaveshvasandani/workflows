@@ -1,9 +1,0 @@
-ignore:
-  - "build*/"  
-  - "tests/"       
-  - "tools/"     
-  - "subprojects/"
-  - "cli/"
-  - "3rdparty/"
-  - "samples/"
-  - "include/"
