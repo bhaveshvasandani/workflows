@@ -41,6 +41,11 @@ jobs:
                   run: |  
                           source venv/bin/activate
                           meson builddir -Dtests=true
+                
+                - name: Black format check
+                  continue-on-error: true
+                  run: |
+                          black --check ./
 
                 - name: Run Unit tests
                   run: |
