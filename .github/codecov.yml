@@ -1,0 +1,14 @@
+coverage:
+  status:
+    project:
+      default:
+        target: auto
+        threshold: 20%
+        base: auto 
+        flags: 
+          - unit
+        paths: 
+          - "lib"
+        if_ci_failed: error #success, failure, error, ignore
+        informational: false
+        only_pulls: false
