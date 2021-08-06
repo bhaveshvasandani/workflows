@@ -19,12 +19,13 @@ jobs:
                sed -i.bak "s,ssh://git@bitbucket.micron.com/hse/hse-python.git,https://${{ secrets.GH_TOKEN }}@github.com/bhaveshvasandani/hse-python.git,g" subprojects/hse-python.wrap
                poetry run meson builddir -Dycsb=true -Dinstall-tools=true -Dinstall-configs=true -Db_coverage=true -Doptimization=0
                poetry run meson test -C builddir --suite=unit
-               poetry run meson compile -C builddir gcovr-html
       - name: Upload
         uses: codecov/codecov-action@v2
         with:
+          fail_ci_if_error: true
+          directory: ./
+          files: *.gcda, *.gcno, *.gcov
           verbose: true
-          path_to_write_report: builddir/codecov_report.txt
       - name: Archive artifacts
         uses: actions/upload-artifact@v2
         with:
