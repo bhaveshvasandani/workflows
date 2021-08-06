@@ -10,5 +10,15 @@ coverage:
         paths: 
           - "lib"
         if_ci_failed: error #success, failure, error, ignore
-        informational: false
+        informational: true
         only_pulls: false
+ignore:
+  - "**/build.*/*"
+  - "**/3rdparty/*"
+  - "**/samples/*"
+  - "**/include/*"
+  - "**/tests*/*"
+  - "**/subprojects/*"
+
+codecov:
+  disable_default_path_fixes: true

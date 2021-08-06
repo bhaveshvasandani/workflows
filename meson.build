@@ -512,7 +512,8 @@ if gcovr.found() and get_option('b_coverage') and 'unit' in hse_tests
                 args,
                 '@OUTPUT@',
                 '-f',
-                '@SOURCE_ROOT@' / 'lib'
+                '@SOURCE_ROOT@' / 'lib',
+                '--keep'
             ],
             depends: unit_test_exes,
             output: 'coverage.@0@'.format(type)
