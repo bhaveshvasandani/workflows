@@ -24,7 +24,6 @@ jobs:
         uses: codecov/codecov-action@v2
         with:
           fail_ci_if_error: true
-          file: builddir/coverage.xml 
           verbose: true
       - name: Archive artifacts
         uses: actions/upload-artifact@v2
