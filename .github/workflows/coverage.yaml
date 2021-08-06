@@ -24,7 +24,7 @@ jobs:
         with:
           fail_ci_if_error: true
           directory: ./
-          files: *.gcda, *.gcno, *.gcov
+          files: *.gcda,*.gcno,*.gcov
           verbose: true
       - name: Archive artifacts
         uses: actions/upload-artifact@v2
