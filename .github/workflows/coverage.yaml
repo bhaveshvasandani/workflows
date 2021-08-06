@@ -21,8 +21,9 @@ jobs:
                poetry run meson test -C builddir --suite=unit
                poetry run meson compile -C builddir gcovr-html
       - name: Upload
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v2
         with:
+          verbose:true
           path_to_write_report: builddir/codecov_report.txt
       - name: Archive artifacts
         uses: actions/upload-artifact@v2
