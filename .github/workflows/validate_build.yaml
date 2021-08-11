@@ -20,7 +20,7 @@ jobs:
                   run: |  
 
                           sudo apt-get update
-                          sudo apt-get install build-essential libblkid-dev libbsd-dev pkg-config libmicrohttpd-dev liburcu-dev libyaml-dev curl-dev python3-setuptools
+                          sudo apt-get install build-essential libblkid-dev libbsd-dev pkg-config libmicrohttpd-dev liburcu-dev libyaml-dev libcurl-dev python3-setuptools
 
                 - uses: actions/checkout@v2
                   with:
