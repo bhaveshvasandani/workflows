@@ -274,7 +274,7 @@ foreach t, params : tests
             '-C', home_dir,
         ],
         timeout: 1800,
-        is_parallel: true,
+        is_parallel: false,
         suite: ['functional'] + params.get('suites', []),
         depends: [
             hse_cli_symlink,
