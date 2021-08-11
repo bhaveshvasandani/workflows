@@ -20,9 +20,7 @@ jobs:
                   run: |  
 
                           sudo apt-get update
-                          sudo apt-get install build-essential libblkid-dev libbsd-dev gettext autopoint autoconf bison libtool pkg-config openjdk-8-jdk libmicrohttpd-dev liburcu-dev libyaml-dev liblz4-1 liblz4-dev curl python3-setuptools
-                          dpkg -l | grep curl
-                          sudo apt-get install libmongoc-1.0-0 libbson-1.0-0 libssl-dev libsasl2-dev
+                          sudo apt-get install build-essential libblkid-dev libbsd-dev pkg-config libmicrohttpd-dev liburcu-dev libyaml-dev curl-dev python3-setuptools
 
                 - uses: actions/checkout@v2
                   with:
@@ -40,7 +38,7 @@ jobs:
                 - name: Build hse-python
                   run: |  
                           source venv/bin/activate
-                          meson builddir -Dtests=true -Dwerror=true
+                          meson builddir -Dwerror=true
                 
                 - name: Compile hse-python
                   run: |
