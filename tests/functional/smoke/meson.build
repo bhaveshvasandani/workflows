@@ -274,12 +274,11 @@ foreach t, params : tests
             '-C', home_dir,
         ],
         timeout: 1800,
-        is_parallel: false,
+        is_parallel: not in_ci,
         suite: ['functional'] + params.get('suites', []),
         depends: [
             hse_cli_symlink,
             params.get('depends', []),
-        ],
-        env: ['MESON_TESTTHREADS=1']
+        ]
     )
 endforeach

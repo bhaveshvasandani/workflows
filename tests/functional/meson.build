@@ -53,6 +53,6 @@ foreach t, params : tests
         depends: params.get('depends', []),
         suite: ['functional'] + params.get('suites', []),
         timeout: 3600,
-        is_parallel: false,
+        is_parallel: not in_ci,
     )
 endforeach
