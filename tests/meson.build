@@ -45,6 +45,7 @@ add_test_setup(
 
 if in_ci
     run_env.append('MESON_TESTTHREADS', 1)
+endif
 
 add_test_setup(
     'ci-nightly',
