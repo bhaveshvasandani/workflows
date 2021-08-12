@@ -280,5 +280,6 @@ foreach t, params : tests
             hse_cli_symlink,
             params.get('depends', []),
         ],
+        env: ['MESON_TESTTHREADS=1']
     )
 endforeach
