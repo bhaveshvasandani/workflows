@@ -35,7 +35,7 @@ jobs:
                           echo "BUILD=${{ matrix.build_type }}"
                           lsblk
                           df -h
-                          poetry run meson builddir -Dbuildtype=${{ matrix.build_type }} -Dycsb=true -Dinstall-tools=true -Dinstall-configs=true -Dwerror=true
+                          poetry run meson builddir -Dbuildtype=${{ matrix.build_type }} -Dycsb=true -Dinstall-tools=true -Dinstall-configs=true -Dwerror=true -Db_sanitize=address,undefined
 
                 - name: Run tests
                   run: |
@@ -78,7 +78,7 @@ jobs:
                           echo "BUILD=${{ matrix.build_type }}"
                           lsblk
                           df -h
-                          python3 -m poetry run meson builddir -Dbuildtype=${{ matrix.build_type }} -Dycsb=true -Dinstall-tools=true -Dinstall-configs=true -Dwerror=true
+                          python3 -m poetry run meson builddir -Dbuildtype=${{ matrix.build_type }} -Dycsb=true -Dinstall-tools=true -Dinstall-configs=true -Dwerror=true -Db_sanitize=address,undefined
 
                 - name: Run tests
                   run: |
