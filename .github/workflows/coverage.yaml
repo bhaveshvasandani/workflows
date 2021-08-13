@@ -14,12 +14,19 @@ jobs:
                python3 -m pip install --user setuptools_rust wheel
                python3 -m pip install --user poetry
                poetry install
+               git clone https://github.com/linux-test-project/lcov.git ${{ runner.temp }}/lcov
+               pushd ${{ runner.temp }}/lcov
+                   sudo make install
+               popd
+            
       - name: Test
         run: |
                sed -i.bak "s,ssh://git@bitbucket.micron.com/hse/hse-python.git,https://${{ secrets.GH_TOKEN }}@github.com/bhaveshvasandani/hse-python.git,g" subprojects/hse-python.wrap
                poetry run meson builddir -Dycsb=true -Dinstall-tools=true -Dinstall-configs=true -Db_coverage=true -Doptimization=0
                poetry run meson test -C builddir --suite=unit
-               poetry run meson compile -C builddir gcovr-xml
+               lcov --capture --directory builddir/lib/ --rc lcov_branch_coverage=1 --output-file coverage_all.info
+               lcov --extract coverage_all.info "$(pwd)/lib/*" --rc lcov_branch_coverage=1 --output-file coverage.info
+
       - name: Upload
         uses: codecov/codecov-action@v2
         with:
@@ -29,4 +36,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
               name: coverage-artifact
-              path: builddir/ 
+              path: coverage.info 
