@@ -32,8 +32,9 @@ jobs:
         with:
           fail_ci_if_error: true
           verbose: true
+          files: builddir/coverage.info 
       - name: Archive artifacts
         uses: actions/upload-artifact@v2
         with:
               name: coverage-artifact
-              path: coverage.info 
+              path: builddir/

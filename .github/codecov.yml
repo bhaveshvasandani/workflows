@@ -5,20 +5,9 @@ coverage:
         target: auto
         threshold: 20%
         base: auto 
-        flags: 
-          - unit
-        paths: 
-          - "lib"
         if_ci_failed: error #success, failure, error, ignore
-        informational: true
+        informational: false
         only_pulls: false
-ignore:
-  - "**/build.*/*"
-  - "**/3rdparty/*"
-  - "**/samples/*"
-  - "**/include/*"
-  - "**/tests*/*"
-  - "**/subprojects/*"
 
-codecov:
-  disable_default_path_fixes: true
+fixes:
+  - "/home/runner/work/workflows/workflows/::"
