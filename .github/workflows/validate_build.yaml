@@ -1,73 +1,74 @@
 name: Validate Builds
 
 on:
-        push:
-        pull_request:
-                types: [opened, synchronize, reopened, edited]
+  push:
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
 
 jobs:
-        build1:
+  build1:
 
-                runs-on: ${{ matrix.os }}
-                strategy:
-                        fail-fast: false
-                        matrix:
-                                os: [ubuntu-18.04]
-                                build_type: [release]
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-18.04]
+        build_type: [release]
 
-                steps:
-                - name: Install dependencies
-                  run: |  
+    steps:
+    - name: Install dependencies
+      run: |2
 
-                          sudo apt-get update
-                          sudo apt-get install build-essential libbsd-dev pkg-config libmicrohttpd-dev liburcu-dev libyaml-dev libcurl4-openssl-dev python3-setuptools
+        sudo apt-get update
+        sudo apt-get install build-essential libbsd-dev pkg-config libmicrohttpd-dev liburcu-dev libyaml-dev libcurl4-openssl-dev python3-setuptools
 
-                - uses: actions/checkout@v2
-                  with:
-                          ref: 'hse-pythontest'
+    - uses: actions/checkout@v2
+      with:
+        ref: hse-pythontest
 
-                - name: Setup python environment to run branch
-                  run: |
-                          python3 -m venv venv
-                          source venv/bin/activate
-                          pip3 install wheel
-                          pip3 install -r requirements.txt
-                          pip3 install meson ninja
+    - name: Setup python environment to run branch
+      run: |
+        python3 -m venv venv
+        source venv/bin/activate
+        pip3 install wheel
+        pip3 install -r requirements.txt
+        pip3 install meson ninja
 
-                - name: Build, compile and test hse-python
-                  run: |  
-                          source venv/bin/activate
-                          meson builddir -Dwerror=true
-                          ninja -C builddir
-                          meson test -C builddir --print-errorlogs --no-stdsplit
+    - name: Build, compile and test hse-python
+      run: |
+        source venv/bin/activate
+        meson builddir -Dwerror=true
+        ninja -C builddir
+        meson test -C builddir --print-errorlogs --no-stdsplit
 
-                - uses: actions/upload-artifact@v2
-                  if: failure()
-                  with:
-                    name: build-artifact
-                    path: builddir/meson-logs/
-        
-        format-check:
+    - uses: actions/upload-artifact@v2
+      if: failure()
+      with:
+        name: build-artifact
+        path: builddir/meson-logs/
 
-                runs-on: ${{ matrix.os }}
-                strategy:
-                        fail-fast: false
-                        matrix:
-                                os: [ubuntu-18.04]
-                                build_type: [release]
-                
-                - uses: actions/checkout@v2
-                  with:
-                          ref: 'hse-pythontest'
+  format-check:
 
-                - name: Setup python environment to run branch
-                  run: |
-                          python3 -m venv venv
-                          source venv/bin/activate
-                          python3 -m pip install black
-                
-                - name: Black format check
-                  continue-on-error: true
-                  run: |  
-                          source venv/bin/activate
-                          black --check ./
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-18.04]
+        build_type: [release]
+    steps:
+    - name: checkout
+    - uses: actions/checkout@v2
+      with:
+        ref: hse-pythontest
+
+    - name: Setup python environment to run branch
+      run: |
+        python3 -m venv venv
+        source venv/bin/activate
+        python3 -m pip install black
+
+    - name: Black format check
+      continue-on-error: true
+      run: |-
+        source venv/bin/activate
+        black --check ./
