@@ -57,7 +57,7 @@ jobs:
         build_type: [release]
     steps:
     - name: checkout
-    - uses: actions/checkout@v2
+      uses: actions/checkout@v2
       with:
         ref: hse-pythontest
 
