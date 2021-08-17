@@ -27,7 +27,6 @@ body:
     id: platform
     attributes:
       label: Platform 
-      description: what platform are you running on?
       placeholder: |
         OS: Ubuntu 18.04
         CPU: 6 cores
