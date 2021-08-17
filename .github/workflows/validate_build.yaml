@@ -60,10 +60,6 @@ jobs:
       with:
         ref: hse-pythontest
 
-    - name: install dependency
-      run: |
-        python3 -m pip install black
-
     - name: Black format check
       continue-on-error: true
       run: |
