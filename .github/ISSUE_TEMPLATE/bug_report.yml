@@ -1,6 +1,5 @@
 name: Bug Reports
 description: Create a bug report to help us improve the project.
-title: "[Bug]: "
 labels: [bug]
 body:
   - type: markdown
@@ -22,14 +21,26 @@ body:
         1. Build and install from master
         2. Configure your system
         3. Run some commands
-        4. See error in logs 
-  - type: textarea
-    id: platform
+        4. See error in logs
+  - type: input
+    id: os
     attributes:
-      label: Platform 
+      label: Linux Distribution
+      placeholder: Ubuntu 18.04
+    validations:
+      required: true
+  - type: input
+    id: fs
+    attributes:
+      label: File System
+      placeholder: xfs
+    validations:
+      required: true
+  - type: input
+    id: platform-other
+    attributes:
+      label: Other System details
       placeholder: |
-        OS: Ubuntu 18.04
-        CPU: 6 cores
-        Memory: 32 GB
-        Storage: 512 GB SSD 
-        File System: xfs
+        CPU: 6 cores 
+        Memory: 32 GB 
+        Storage: 512 GB SSD
