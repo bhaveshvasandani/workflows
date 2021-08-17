@@ -23,7 +23,7 @@ body:
         2. Configure your system
         3. Run some commands
         4. See error in logs 
-  - type: input
+  - type: textarea
     id: platform
     attributes:
       label: Platform 
