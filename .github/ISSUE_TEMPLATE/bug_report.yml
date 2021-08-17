@@ -6,12 +6,11 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thank you for opening an issue. Please be sure to review our [contribution guidelines](CONTRIBUTING.md)
+        Thank you for opening an issue. Please be sure to review contributing guidelines.
   - type: textarea
     id: bug-description
     attributes:
       label: Description
-      description: Also tell us, what did you expect to happen?
       placeholder: A clear and concise description of the bug.
     validations:
       required: true
@@ -20,7 +19,18 @@ body:
     attributes:
       label: Steps to reproduce
       placeholder: |
-        <!-- 1. Build and install from master
+        1. Build and install from master
         2. Configure your system
         3. Run some commands
-        4. See error in logs -->
+        4. See error in logs 
+  - type: input
+    id: platform
+    attributes:
+      label: Platform 
+      description: what platform are you running on?
+      placeholder: |
+        OS: Ubuntu 18.04
+        CPU: 6 cores
+        Memory: 32 GB
+        Storage: 512 GB SSD 
+        File System: xfs
