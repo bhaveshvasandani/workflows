@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-18.04]
+        os: [ubuntu-latest]
         build_type: [release, debugoptimized]
 
     steps:
@@ -44,7 +44,7 @@ jobs:
         path: builddir/meson-logs/
 
   build_fedora:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     container:
       image: fedora:latest
       options: --privileged  -v /usr/src:/usr/src -v /lib/modules:/lib/modules
