@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest]
+        os: [ubuntu-18.04]
         build_type: [release, debugoptimized]
 
     steps:
@@ -22,16 +22,16 @@ jobs:
         sudo apt-get install libmongoc-1.0-0 libbson-1.0-0 libssl-dev libsasl2-dev
         python3 -m pip install --user setuptools_rust wheel
         python3 -m pip install --user poetry
+
     - uses: actions/checkout@v2
 
     - name: Setup python environment to run branch
       run: |
-        poetry install
+        python3 -m poetry install
 
     - name: Build setup with YCSB, tools and configs
       run: |
-        sed -i.bak "s,ssh://git@bitbucket.micron.com/hse/hse-python.git,https://${{ secrets.GH_TOKEN }}@github.com/bhaveshvasandani/hse-python.git,g" subprojects/hse-python.wrap
-        poetry run meson builddir -Dbuildtype=${{ matrix.build_type }} -Dycsb=true -Dinstall-tools=true -Dinstall-configs=true -Dwerror=true -Db_sanitize=address,undefined
+        python3 -m poetry run meson builddir -Dbuildtype=${{ matrix.build_type }} -Dycsb=true -Dinstall-tools=true -Dinstall-configs=true -Dwerror=true
 
     - name: Run tests
       run: |
@@ -40,11 +40,11 @@ jobs:
     - uses: actions/upload-artifact@v2
       if: failure()
       with:
-        name: build-artifact-ubuntu18
+        name: build-artifact-ubuntu18-${{ matrix.build_type }}
         path: builddir/meson-logs/
 
   build_fedora:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     container:
       image: fedora:latest
       options: --privileged  -v /usr/src:/usr/src -v /lib/modules:/lib/modules
@@ -57,10 +57,11 @@ jobs:
     - name: Install dependencies
       run: |
         sudo dnf install -y which git pkg-config java-1.8.0-openjdk-devel libmicrohttpd-devel userspace-rcu-devel libyaml-devel lz4-devel libbsd-devel libcurl-devel
-        sudo dnf install -y xz mongo-c-driver libbson openssl-devel cyrus-sasl-devel ncurses-devel cmake make automake gcc gcc-c++ kernel-devel libasan libubsan
+        sudo dnf install -y xz mongo-c-driver libbson openssl-devel cyrus-sasl-devel ncurses-devel cmake make automake gcc gcc-c++ kernel-devel
         sudo dnf install -y python-pip python-wheel python3-devel
         python3 -m pip install --user setuptools_rust wheel
         python3 -m pip install --user poetry
+
     - uses: actions/checkout@v2
 
     - name: Setup python environment to run branch
@@ -69,8 +70,7 @@ jobs:
 
     - name: Build setup with YCSB, tools and configs
       run: |
-        sed -i.bak "s,ssh://git@bitbucket.micron.com/hse/hse-python.git,https://${{ secrets.GH_TOKEN }}@github.com/bhaveshvasandani/hse-python.git,g" subprojects/hse-python.wrap
-        python3 -m poetry run meson builddir -Dbuildtype=${{ matrix.build_type }} -Dycsb=true -Dinstall-tools=true -Dinstall-configs=true -Dwerror=true -Db_sanitize=address,undefined
+        python3 -m poetry run meson builddir -Dbuildtype=${{ matrix.build_type }} -Dycsb=true -Dinstall-tools=true -Dinstall-configs=true -Dwerror=true
 
     - name: Run tests
       run: |
@@ -79,5 +79,16 @@ jobs:
     - uses: actions/upload-artifact@v2
       if: failure()
       with:
-        name: build-artifact-fedora-latest
+        name: build-artifact-fedora-latest-${{ matrix.build_type }}
         path: builddir/meson-logs/
+
+  checkoss:
+    runs-on: ubuntu-18.04
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: check for license
+      continue-on-error: true
+      run: |
+        scripts/dev/checkoss
