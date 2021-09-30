@@ -50,11 +50,12 @@ jobs:
   build_fedora:
     runs-on: ubuntu-latest
     container:
-      image: fedora:latest
+      image: ${{ matrix.image }}
       options: --privileged  -v /usr/src:/usr/src -v /lib/modules:/lib/modules
     strategy:
       fail-fast: false
       matrix:
+        image: ["fedora:latest", "almalinux:8"]
         build_type: [release, debugoptimized]
 
     steps:
