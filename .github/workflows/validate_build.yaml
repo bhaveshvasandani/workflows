@@ -18,6 +18,9 @@ jobs:
         build_type: [release, debugoptimized]
 
     steps:
+    - name: List hardware
+      run: |
+        lscpu
     - name: Install dependencies
       run: |
         echo "$HOME/.local/bin" >> $GITHUB_PATH
