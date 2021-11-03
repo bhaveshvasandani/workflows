@@ -103,4 +103,4 @@ Terminology:
 
     Key:
     - Composition: A solid line (~ or |) terminated with "<*>" on one end
-    - Aggregation: A dotted line (. or :)
+    - Aggregation: A dotted line (. or :) 
