@@ -58,7 +58,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        image: ["fedora:latest", "almalinux:8"]
+        image: ["fedora:latest", "almalinux:8", "rockylinux/rockylinux"]
         build_type: [release, debugoptimized]
 
     steps:
