@@ -65,7 +65,6 @@ jobs:
         sudo dnf install -y xz mongo-c-driver libbson openssl-devel cyrus-sasl-devel ncurses-devel cmake make automake gcc gcc-c++ kernel-devel
         sudo dnf install -y python-pip python-wheel python3-devel libxml2-devel libxslt-devel
         sudo dnf install -y libasan libubsan
-        python3 -m pip install --user setuptools_rust wheel
         python3 -m pip install --user poetry
 
     - uses: actions/checkout@v2
