@@ -66,7 +66,7 @@ jobs:
       run: |
         echo "$HOME/.local/bin" >> $GITHUB_PATH
         
-        dnf install sudo dnf-plugins-core epel-release
+        dnf install -y sudo dnf-plugins-core epel-release
         dnf config-manager --set-enabled powertools
         dnf install -y which git pkg-config java-1.8.0-openjdk-devel libmicrohttpd-devel userspace-rcu-devel libyaml-devel lz4-devel libbsd-devel libcurl-devel
         dnf install -y xz mongo-c-driver libbson openssl-devel cyrus-sasl-devel ncurses-devel cmake make automake gcc gcc-c++ kernel-devel
