@@ -67,6 +67,7 @@ jobs:
     - name: Install dependencies
       run: |
         echo "$HOME/.local/bin" >> $GITHUB_PATH
+        echo "$HOME/.poetry/bin" >> $GITHUB_PATH
         
         dnf install -y sudo dnf-plugins-core epel-release
         dnf config-manager --set-enabled powertools
