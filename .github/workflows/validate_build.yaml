@@ -75,6 +75,7 @@ jobs:
         dnf install -y xz mongo-c-driver libbson openssl-devel cyrus-sasl-devel ncurses-devel cmake make automake gcc gcc-c++ kernel-devel
         dnf install -y python36 python3-devel libxml2 libxslt 
         curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3
+        source $HOME/.poetry/env
         poetry install
 
     - name: Build setup with YCSB, tools and configs
