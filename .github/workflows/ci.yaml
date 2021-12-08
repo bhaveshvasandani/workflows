@@ -5,7 +5,7 @@ on:
     branches:
       - master
       - v2.*
-      - tristan957/bindings-auto
+      - tristan957*
   pull_request:
     types: [opened, synchronize, reopened, edited]
 
@@ -57,7 +57,7 @@ jobs:
           name: crash
           path: /cores
 
-       - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v2
         if: failure()
         with:
           name: messages
