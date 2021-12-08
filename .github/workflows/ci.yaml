@@ -49,19 +49,10 @@ jobs:
         if: failure()
         with:
           name: build-artifact-${{ matrix.os }}-${{ matrix.build_type }}
-          path: builddir/meson-logs/
-
-      - uses: actions/upload-artifact@v2
-        if: failure()
-        with:
-          name: crash
-          path: /cores
-
-      - uses: actions/upload-artifact@v2
-        if: failure()
-        with:
-          name: messages
-          path: /var/log/messages
+          path:
+          - builddir/meson-logs/
+          - /cores
+          - /var/log/messages
 
   fedora:
     runs-on: ubuntu-latest
