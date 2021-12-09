@@ -50,9 +50,9 @@ jobs:
         with:
           name: build-artifact-${{ matrix.os }}-${{ matrix.build_type }}
           path:
-          - builddir/meson-logs/
-          - /cores
-          - /var/log/messages
+            - builddir/meson-logs/
+            - /cores
+            - /var/log/messages
 
   fedora:
     runs-on: ubuntu-latest
