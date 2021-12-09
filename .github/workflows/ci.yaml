@@ -40,7 +40,7 @@ jobs:
         run: |
           ulimit -c unlimited
           meson test -C builddir --setup=ci --print-errorlogs --no-stdsplit
-          sudo chmod -R +rwx /cores/*
+          sudo chmod -R +rwx /cores/* || true
 
       - uses: actions/upload-artifact@v2
         if: failure()
