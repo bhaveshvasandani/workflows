@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    path: .github/**
+    path: .github/
   pull_request:
     types: [opened, synchronize, reopened, edited]
 
@@ -46,10 +46,10 @@ jobs:
         if: failure()
         with:
           name: build-artifact-${{ matrix.os }}-${{ matrix.build_type }}
-          path:
-            - builddir/meson-logs/
-            - /cores
-            - /var/log/messages
+          path: |
+            builddir/meson-logs/
+            /cores
+            /var/log/messages
 
   fedora:
     runs-on: ubuntu-latest
